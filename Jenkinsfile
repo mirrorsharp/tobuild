@@ -29,7 +29,7 @@ pipeline {
                 sh 'hadolint Dockerfile'
                 }
                 container('ubuntu') {
-                sh' sudo apt-get update'
+                sh 'sudo apt-get update'
                 sh 'sudo apt-get -y install apt-transport-https ca-certificates curl gnupg-agent software-properties-common'
                 sh 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -'
                 sh 'sudo apt-key fingerprint 0EBFCD88 sudo add-apt-repository \
