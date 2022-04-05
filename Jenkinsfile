@@ -30,8 +30,7 @@ pipeline {
                 }
                 container('ubuntu') {
                 sh' sudo apt-get update \
-                    sudo apt-get -y install \ 
-                    apt-transport-https \ 
+                    sudo apt-get -y install apt-transport-https \
                     ca-certificates \ 
                     curl && gnupg-agent \
                     software-properties-common
