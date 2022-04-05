@@ -55,7 +55,7 @@ pipeline {
             steps {
                 container('ubuntu') {
                 sh 'apt-get update'
-                sh 'apt-get install \
+                sh 'apt-get install -y \
                     ca-certificates \
                     curl \
                     gnupg \
