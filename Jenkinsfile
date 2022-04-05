@@ -11,10 +11,12 @@ pipeline {
             command:
             - cat
             tty: true
-          - name: kaniko
-            image: gcr.io/kaniko-project/executor:debug
+          - name: docker
+            image: docker:dind
+            securityContext:
+              privileged: true
             command:
-            - /busybox/cat 
+            - cat 
             tty: true
         '''
     }
@@ -29,11 +31,9 @@ pipeline {
         }
         stage('Dockerfile build') {
             steps {
-                container('centos') {
-                sh '''
-                /kaniko/executor --dockerfile ./Dockerfile
-                                 --context .
-                '''
+                container('docker') {
+                sh 'docker --version'
+                sh 'docker build -t testpython .'
                 }
             }
         }
