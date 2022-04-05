@@ -11,10 +11,10 @@ pipeline {
             command:
             - cat
             tty: true
-          - name: centos
-            image: openshift/jenkins-slave-base-centos7:v3.11
+          - name: kaniko
+            image: gcr.io/kaniko-project/executor:debug
             command:
-            - cat 
+            - /busybox/cat 
             tty: true
         '''
     }
@@ -30,15 +30,10 @@ pipeline {
         stage('Dockerfile build') {
             steps {
                 container('centos') {
-                sh 'yum install -y yum-utils'
-                sh 'yum-config-manager \
-                    --add-repo \
-                    https://download.docker.com/linux/centos/docker-ce.repo'
-                sh 'yum install -y docker-ce docker-ce-cli containerd.io'
-                sh 'docker --version'
-                sh 'usermod -aG docker jenkins'
-                sh 'systemctl start docker'
-                sh 'docker build -t testpython . && docker run -d -p:5000:5000 testpython'
+                sh '''
+                /kaniko/executor --dockerfile ./Dockerfile
+                                 --context .
+                '''
                 }
             }
         }
