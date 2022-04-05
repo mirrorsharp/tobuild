@@ -14,7 +14,7 @@ pipeline {
           - name: centos
             image: openshift/jenkins-slave-base-centos7:v3.11
             command:
-            - cat
+            - yum
             tty: true
         '''
     }
