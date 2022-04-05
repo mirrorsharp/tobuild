@@ -12,17 +12,10 @@ pipeline {
             - cat
             tty: true
           - name: docker
-            image: docker:latest
+            image: docker:19.03.1-dind
             command:
             - cat
             tty: true
-            volumeMounts:
-            - mountPath: /var/run/docker.sock
-              name: docker-sock
-          volumes:
-          - name: docker-sock
-            hostPath:
-              path: /var/run/docker.sock
         '''
     }
   }
@@ -37,7 +30,7 @@ pipeline {
         stage('Dockerfile build') {
             steps {
                 container('docker') {
-                sh 'docker build -t testpython . && docker run -d -p 5000:5000 testpython'
+                sh 'docker build -t testpython .'
                 }
             }
         }
