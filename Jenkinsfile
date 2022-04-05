@@ -28,6 +28,10 @@ pipeline {
                 container('hadolint') {
                 sh 'hadolint Dockerfile'
                 }
+            }
+        }
+        stage('Dockerfile build') {
+            steps {
                 container('ubuntu') {
                 sh 'echo TEST OK'
                 // sh 'sudo apt-get update'
