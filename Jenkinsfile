@@ -23,7 +23,7 @@ pipeline {
                 sh 'curl -LO https://github.com/hadolint/hadolint/releases/download/${HADOLINT_V}/hadolint-Linux-x86_64'
                 sh 'chmod +x hadolint-Linux-x86_64'
                 sh 'mv hadolint-Linux-x86_64 /bin/hadolint'
-                sh 'hadolint Dockerfile'
+                sh 'hadolint ./tobuild/Dockerfile'
                 }
             }
         }
