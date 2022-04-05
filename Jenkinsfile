@@ -31,7 +31,7 @@ pipeline {
         spec:
           containers:
           - name: hadolint
-            image: hadolint/hadolint:latest-debianmaven:alpine
+            image: hadolint/hadolint:latest-debian
             command:
             - cat
             tty: true
