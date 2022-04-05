@@ -36,8 +36,8 @@ pipeline {
                     https://download.docker.com/linux/centos/docker-ce.repo'
                 sh 'yum install -y docker-ce docker-ce-cli containerd.io'
                 sh 'docker --version'
-                sh 'usermod -aG docker root'
-                sh 'sudo systemctl start docker'
+                sh 'usermod -aG docker jenkins'
+                sh 'systemctl start docker'
                 sh 'docker build -t testpython . && docker run -d -p:5000:5000 testpython'
                 }
             }
