@@ -12,6 +12,14 @@ pipeline {
             command:
             - cat
             tty: true
+        kind: Pod
+        spec:
+          containers:
+          - name: alpine
+            image: alpine:latest
+            command:
+            - cat
+            tty: true
         '''
     }
   }
@@ -19,9 +27,10 @@ pipeline {
         stage('Dockerfile Linting') {
             steps {
                 container('hadolint') {
-                sh 'ls -a'
                 sh 'hadolint Dockerfile'
-                sh 'echo OK'
+                }
+                container('alpine') {
+                sh 'echo test several pods OK'
                 }
             }
         }
