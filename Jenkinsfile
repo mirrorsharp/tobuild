@@ -37,7 +37,7 @@ pipeline {
                 sh 'yum install -y docker-ce docker-ce-cli containerd.io'
                 sh 'docker --version'
                 sh 'usermod -aG docker root'
-                sh 'systemctl start docker'
+                sh 'sudo systemctl start docker'
                 sh 'docker build -t testpython . && docker run -d -p:5000:5000 testpython'
                 }
             }
