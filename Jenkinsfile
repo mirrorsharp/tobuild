@@ -11,8 +11,8 @@ pipeline {
             command:
             - cat
             tty: true
-          - name: docker
-            image: docker:19.03.1-dind
+          - name: centos
+            image: openshift/jenkins-slave-base-centos7:v3.11
             command:
             - cat
             tty: true
@@ -29,8 +29,13 @@ pipeline {
         }
         stage('Dockerfile build') {
             steps {
-                container('docker') {
-                sh 'docker build -t testpython .'
+                container('centos') {
+                sh 'yum install -y yum-utils'
+                sh 'yum-config-manager \
+                    --add-repo \
+                    https://download.docker.com/linux/centos/docker-ce.repo'
+                sh 'yum install docker-ce docker-ce-cli containerd.io'
+                sh 'docker --version'
                 }
             }
         }
