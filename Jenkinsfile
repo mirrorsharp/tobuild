@@ -1,27 +1,3 @@
-// pipeline {
-//   agent {
-//     kubernetes {
-//       yaml '''
-//         apiVersion: v1
-//         kind: Pod
-//         spec:
-//           containers:
-//           - name: hadolint
-//             image: hadolint/hadolint:latest-debian
-//             imagePullPolicy: Always
-//             command:
-//             - cat
-//             tty: true
-//           containers:
-//           - name: ubuntu
-//             image: ubuntu:latest
-//             imagePullPolicy: Always
-//             command:
-//             - cat
-//             tty: true
-//         '''
-//     }
-//   }
 pipeline {
   agent {
     kubernetes {
@@ -40,6 +16,9 @@ pipeline {
             command:
             - cat
             tty: true
+            volumeMounts:
+            - mountPath: /var/run/docker.sock
+              name: docker-sock
         '''
     }
   }
