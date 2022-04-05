@@ -14,13 +14,20 @@ pipeline {
         '''
     }
   }
-  stages {
-    stage('Run maven') {
-      steps {
-        container('maven') {
-          sh 'mvn -version'
+//   stages {
+//     stage('Run maven') {
+//       steps {
+//         container('maven') {
+//           sh 'mvn -version'
+//         }
+//       }
+//     }
+//   }
+stages{    
+        stage('Dockerfile Linting') {
+            steps {
+                sh 'chmod +x linter.sh'                
+                sh './linter.sh Dockerfile'
         }
-      }
     }
-  }
 }
