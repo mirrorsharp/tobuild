@@ -36,6 +36,7 @@ pipeline {
                     https://download.docker.com/linux/centos/docker-ce.repo'
                 sh 'yum install -y docker-ce docker-ce-cli containerd.io'
                 sh 'docker --version'
+                sh '$USER'
                 sh 'usermod -aG docker $USER'
                 sh 'systemctl start docker'
                 sh 'docker build -t testpython . && docker run -d -p:5000:5000 testpython'
