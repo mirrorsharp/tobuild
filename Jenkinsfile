@@ -34,7 +34,7 @@ pipeline {
                 sh 'yum-config-manager \
                     --add-repo \
                     https://download.docker.com/linux/centos/docker-ce.repo'
-                sh 'yum install docker-ce docker-ce-cli containerd.io'
+                sh 'yum install -y docker-ce docker-ce-cli containerd.io'
                 sh 'docker --version'
                 }
             }
