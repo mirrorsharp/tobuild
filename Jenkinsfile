@@ -6,8 +6,8 @@ pipeline {
         kind: Pod
         spec:
           containers:
-          - name: maven
-            image: maven:alpine
+          - name: alpine
+            image: alpine:latest
             command:
             - cat
             tty: true
