@@ -1,6 +1,9 @@
 # Default Values for my Helm Chart
-
 container:
-  image: adv4000/k8sphp:latest
+  image: iangodbx/testpython
+  tag: latest
+
+label:
+  env: dev
 
 replicaCount: 2

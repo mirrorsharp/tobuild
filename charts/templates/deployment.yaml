@@ -1,0 +1,22 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  labels:
+    app : {{ .Release.Name }}-deployment
+    env : {{ .Values.label.env }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      project: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        project: {{ .Release.Name }}   # Service will look for those PODS Labels!!!
+    spec:
+      containers:
+        - name : {{ .Release.Name }}-flask
+          image: {{ .Values.container.image }}:{{ .Values.container.tag }}
+          ports:
+            - containerPort: 5000

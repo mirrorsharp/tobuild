@@ -10,6 +10,11 @@ spec:
     command:
     - cat
     tty: true
+  - name: jenkins-agent
+    image: iangodbx/jenkins-agent:latest
+    command:
+    - cat
+    tty: true
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
     imagePullPolicy: Always
@@ -49,5 +54,12 @@ spec:
         }
       }
     }
+    stage('Push to Chartmuseum') {
+      steps {
+        container('jenkins-agent') {
+          sh 'helm plugin list'
+                }
+            }
+        }
   }
 }
