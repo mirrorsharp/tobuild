@@ -1,8 +1,7 @@
 pipeline {
   agent {
     kubernetes {
-      yaml '''
-apiVersion: v1
+      yaml """
 kind: Pod
 spec:
   containers:
@@ -14,18 +13,18 @@ spec:
     args:
     - 9999999
     volumeMounts:
-      - name: ml-jenkins-docker-cfg
+      - name: jenkins-docker-cfg
         mountPath: /kaniko/.docker
   volumes:
-  - name: ml-enkins-docker-cfg
+  - name: jenkins-docker-cfg
     projected:
       sources:
       - secret:
-          name: ml-docker-credentials
+          name: docker-credentials
           items:
             - key: .dockerconfigjson
               path: config.json
-'''
+"""
     }
   }
   stages {
