@@ -15,6 +15,11 @@ spec:
     command:
     - cat
     tty: true
+  - name: pullchart
+    image: dtzar/helm-kubectl
+    command:
+    - cat
+    tty: true
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
     imagePullPolicy: Always
@@ -59,6 +64,14 @@ spec:
         container('pushchart') {
           sh 'helm plugin install https://github.com/chartmuseum/helm-push --version 0.10.1'
           sh 'helm repo add chartmuseum http://10.100.4.120:8080 && helm cm-push charts/ chartmuseum'
+                }
+            }
+        }
+    stage('Pull from Chartmuseum') {
+      steps {
+        container('pullchart') {
+          sh 'helm repo update'
+          sh 'helm repo list'
                 }
             }
         }
