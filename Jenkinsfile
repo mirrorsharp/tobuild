@@ -70,8 +70,10 @@ spec:
     stage('Pull from Chartmuseum') {
       steps {
         container('pullchart') {
+          sh 'helm repo add chartmuseum http://10.100.4.120:8080'
           sh 'helm repo update'
           sh 'helm repo list'
+          sh 'helm search repo chartmuseum'
                 }
             }
         }
