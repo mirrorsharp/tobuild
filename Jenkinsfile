@@ -74,6 +74,7 @@ spec:
           sh 'helm repo update'
           sh 'helm repo list'
           sh 'helm search repo chartmuseum'
+          sh 'helm install mychart chartmuseum/jchart'
                 }
             }
         }
