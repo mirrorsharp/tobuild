@@ -63,7 +63,7 @@ spec:
       steps {
         container('pushchart') {
           sh 'helm plugin install https://github.com/chartmuseum/helm-push --version 0.10.1'
-          sh 'helm repo add chartmuseum http://10.100.4.120:8080 && helm cm-push charts/ chartmuseum'
+          sh 'helm repo add chartmuseum http://10.100.4.120:8080 && helm cm-push --force charts/ chartmuseum'
                 }
             }
         }
