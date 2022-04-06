@@ -17,7 +17,7 @@ spec:
       - name: ml-jenkins-docker-cfg
         mountPath: /kaniko/.docker
   volumes:
-  - name: jml-enkins-docker-cfg
+  - name: ml-enkins-docker-cfg
     projected:
       sources:
       - secret:
