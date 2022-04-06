@@ -6,10 +6,10 @@ kind: Pod
 spec:
   containers:
   - name: hadolint
-  image: hadolint/hadolint:latest-debian
-  command:
-  - cat
-  tty: true
+    image: hadolint/hadolint:latest-debian
+    command:
+    - cat
+    tty: true
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
     imagePullPolicy: Always
