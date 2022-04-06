@@ -57,6 +57,7 @@ spec:
     stage('Push to Chartmuseum') {
       steps {
         container('pushchart') {
+          sh 'helm plugin install https://github.com/chartmuseum/helm-push --version 0.10.1'
           sh 'helm plugin list'
                 }
             }
