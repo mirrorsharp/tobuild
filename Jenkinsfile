@@ -5,6 +5,11 @@ pipeline {
 kind: Pod
 spec:
   containers:
+  - name: hadolint
+  image: hadolint/hadolint:latest-debian
+  command:
+  - cat
+  tty: true
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
     imagePullPolicy: Always
@@ -28,6 +33,13 @@ spec:
     }
   }
   stages {
+    stage('Dockerfile Linting') {
+      steps {
+        container('hadolint') {
+          sh 'hadolint Dockerfile'
+                }
+            }
+        }
     stage('Build with Kaniko') {
       steps {
         container(name: 'kaniko', shell: '/busybox/sh') {
