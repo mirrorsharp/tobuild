@@ -1,41 +1,41 @@
 pipeline {
   agent {
     kubernetes {
-      yaml '''
-        apiVersion: v1
-        kind: Pod
-        spec:
-          containers:
-          - name: hadolint
-            image: hadolint/hadolint:latest-debian
-            command:
-            - cat
-            tty: true
-          - name: docker
-            image: docker:dind
-            securityContext:
-              privileged: true
-            command:
-            - cat 
-            tty: true
-        '''
+      yaml """
+kind: Pod
+spec:
+  containers:
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:debug
+    imagePullPolicy: Always
+    command:
+    - sleep
+    args:
+    - 9999999
+    volumeMounts:
+      - name: ml-jenkins-docker-cfg
+        mountPath: /kaniko/.docker
+  volumes:
+  - name: jml-enkins-docker-cfg
+    projected:
+      sources:
+      - secret:
+          name: ml-docker-credentials
+          items:
+            - key: .dockerconfigjson
+              path: config.json
+"""
     }
   }
-    stages {    
-        stage('Dockerfile Linting') {
-            steps {
-                container('hadolint') {
-                sh 'hadolint Dockerfile'
-                }
-            }
+  stages {
+    stage('Build with Kaniko') {
+      steps {
+        container(name: 'kaniko', shell: '/busybox/sh') {
+          sh '''#!/busybox/sh
+            /kaniko/executor --context `pwd` --dockerfile Dockerfile --destination iangodbx/testpython:latest
+          '''
         }
-        stage('Dockerfile build') {
-            steps {
-                container('docker') {
-                sh 'docker --version'
-                sh 'docker build -t testpython .'
-                }
-            }
-        }
+      }
     }
+  }
 }
