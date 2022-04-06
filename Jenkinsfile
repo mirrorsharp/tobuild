@@ -10,8 +10,8 @@ spec:
     command:
     - cat
     tty: true
-  - name: jenkins-agent
-    image: iangodbx/jenkins-agent:latest
+  - name: pushchart
+    image: dtzar/helm-kubectl
     command:
     - cat
     tty: true
@@ -56,7 +56,7 @@ spec:
     }
     stage('Push to Chartmuseum') {
       steps {
-        container('jenkins-agent') {
+        container('pushchart') {
           sh 'helm plugin list'
                 }
             }
