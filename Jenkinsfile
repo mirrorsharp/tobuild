@@ -70,11 +70,18 @@ spec:
     stage('Pull from Chartmuseum') {
       steps {
         container('pullchart') {
-          sh 'helm repo add chartmuseum http://10.100.4.120:8080'
-          sh 'helm repo update'
-          sh 'helm repo list'
-          sh 'helm search repo chartmuseum'
-          sh 'helm install mychart chartmuseum/jchart'
+          script {
+            if (env.ENV == "dev") {
+              sh 'helm repo add chartmuseum http://10.100.4.120:8080'
+              sh 'helm repo update'
+              sh 'helm install mychart -n ml-onboarding-dev --set label.env=dev --set replicaCount=1 chartmuseum/jchart' 
+                    }
+            if (env.ENV == "prod") {
+              sh 'helm repo add chartmuseum http://10.100.4.120:8080'
+              sh 'helm repo update'
+              sh 'helm install mychart -n ml-onboarding-prod --set label.env=prod --set replicaCount=3 chartmuseum/jchart' 
+                    }
+                  }
                 }
             }
         }
