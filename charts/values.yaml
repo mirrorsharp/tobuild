@@ -1,4 +1,3 @@
-# Default Values for my Helm Chart
 container:
   image: iangodbx/testpython
   tag: latest

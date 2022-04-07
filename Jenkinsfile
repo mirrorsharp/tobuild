@@ -1,7 +1,7 @@
 pipeline {
   agent {
-    kubernetes {
-      yaml """
+    kubernetes { // Pod definition
+      yaml """ 
 kind: Pod
 spec:
   containers:
@@ -59,7 +59,7 @@ spec:
         }
       }
     }
-    stage('Push to Chartmuseum') {
+    stage('Push to Chartmuseum') { //Push to chartmuseum via cm-push plugin
       steps {
         container('pushchart') {
           sh 'helm plugin install https://github.com/chartmuseum/helm-push --version 0.10.1'
@@ -67,8 +67,8 @@ spec:
                 }
             }
         }
-    stage('Pull from Chartmuseum') {
-      environment {
+    stage('Pull from Chartmuseum') { 
+      environment { // Environmental variables for Jenkins secrets 
               DEV_SECRET=credentials('secret-dev')
               PROD_SECRET=credentials('secret-prod')
         }      
