@@ -54,7 +54,7 @@ spec:
       steps {
         container(name: 'kaniko', shell: '/busybox/sh') {
           sh '''#!/busybox/sh
-            /kaniko/executor --context `pwd` --dockerfile Dockerfile --destination iangodbx/testpython:latest
+            /kaniko/executor --context `pwd` --dockerfile Dockerfile --destination iangodbx/testpython:${env.ENV}
           '''
         }
       }
@@ -78,13 +78,13 @@ spec:
             if (env.ENV == "dev") {
               sh 'helm repo add chartmuseum http://10.100.4.120:8080'
               sh 'helm repo update'
-              sh 'helm install mychart -n ml-onboarding-dev --set label.env=dev --set replicaCount=1 chartmuseum/jchart' 
+              sh 'helm install mychart -n ml-onboarding-dev --set label.env=dev --set container.tag=dev --set replicaCount=1 chartmuseum/jchart' 
               sh 'kubectl create secret generic secret-dev --from-literal=password=$DEV_SECRET -n ml-onboarding-dev'
                     }
             if (env.ENV == "prod") {
               sh 'helm repo add chartmuseum http://10.100.4.120:8080'
               sh 'helm repo update'
-              sh 'helm install mychart -n ml-onboarding-prod --set label.env=prod --set replicaCount=3 chartmuseum/jchart'
+              sh 'helm install mychart -n ml-onboarding-prod --set label.env=prod --set container.tag=prod --set replicaCount=3 chartmuseum/jchart'
               sh 'kubectl create secret generic secret-prod --from-literal=password=$PROD_SECRET -n ml-onboarding-prod' 
                     }
                   }
