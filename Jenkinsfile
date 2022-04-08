@@ -54,7 +54,7 @@ spec:
       steps {
         container(name: 'kaniko', shell: '/busybox/sh') {
           sh '''#!/busybox/sh
-            /kaniko/executor --context `pwd` --dockerfile Dockerfile --destination iangodbx/testpython:${env.ENV}
+            /kaniko/executor --context `pwd` --dockerfile Dockerfile --destination iangodbx/testpython:$env.ENV
           '''
         }
       }
